@@ -1,0 +1,1 @@
+module.exports.categoriesValidation=require('./categories.validation')
