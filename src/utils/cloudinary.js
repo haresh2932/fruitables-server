@@ -3,9 +3,9 @@ const cloudinary = require("cloudinary").v2
 
 // Configuration
 cloudinary.config({
-    cloud_name: "dkpybnqum",
-    api_key: "987757292187192",
-    api_secret: "09_JTcNQvGxJGfK22PHl1RxiNdU" // Click 'View Credentials' below to copy your API secret
+    cloud_name: process.env.CLOUDNARY_NAME,
+    api_key: process.env.CLOUDNARY_KEY,
+    api_secret: process.env.CLOUDNARY_SECRET_KEY // Click 'View Credentials' below to copy your API secret
 });
 
 const uploadFile = async (localPath, folderName) => {

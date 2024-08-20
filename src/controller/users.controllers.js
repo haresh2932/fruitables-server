@@ -128,7 +128,7 @@ const getNewtoken = async (req, res) => {
     try {
         console.log("haha", req.cookies.refreshToken)
 
-        const checkToken = await jwt.verify(req.cookies.refreshToken, "hfdfdbvuhfdhufdhfff")
+        const checkToken = await jwt.verify(req.cookies.refreshToken, process.env.REFRESHTOKEN_SECRET_KEY)
         console.log(checkToken);
 
         if (!checkToken) {

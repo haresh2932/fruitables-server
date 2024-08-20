@@ -29,12 +29,17 @@ app.use(require('express-session')({ secret: 'fbfhdfhdfdhfh', resave: true, save
 app.use(passport.initialize());
 app.use(express.json())
 app.use(passport.session());
-app.use("/api/v1",router)
+
 app.use(cookieParser())
 googleProvider();
 facebookProvider();
 
 //api/v1/categories
+app.use('/',(req,res)=>{
+    res.send('hello world')
+})
+
+app.use("/api/v1",router)
 
 app.listen(8000,()=>{
     console.log("server started at port 8000");
