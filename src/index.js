@@ -7,7 +7,7 @@ const connectDB = require("./db/mongodb")
 const cookieParser = require('cookie-parser')
 const passport = require("passport")
 const { googleProvider, facebookProvider } = require("./utils/Provider")
-const connectChat = require("./utils/socketIO")
+// const connectChat = require("./utils/socketIO")
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const path=require('path')
@@ -38,7 +38,7 @@ app.use(
     })
 );
 connectDB()
-connectChat()
+// connectChat()
 
 app.use(cors({
     origin: 'http://localhost:3000',
