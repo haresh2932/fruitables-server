@@ -10,6 +10,7 @@ const { googleProvider, facebookProvider } = require("./utils/Provider")
 const connectChat = require("./utils/socketIO")
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
+const path=require('path')
 
 
 // const swaggerDocument = YAML.load('./src/api.yaml')
