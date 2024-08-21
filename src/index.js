@@ -51,13 +51,13 @@ app.use(passport.session());
 
 app.use(cookieParser())
 
-
+app.use("/api/v1", router)
 //api/v1/categories
 app.use('/', (req, res) => {
     res.send('hello world')
 })
 
-app.use("/api/v1", router)
+
 
 app.listen(8000, () => {
     console.log("server started at port 8000");
