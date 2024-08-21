@@ -105,7 +105,9 @@ const login = async (req, res) => {
 
     const option = {
         httpOnly: true,
-        secure: true
+        secure: true,
+        sameSite: 'None',
+        maxAge: 60 * 60 * 24 * 7
     }
     const { accessToken, refreshToken } = await getAccessToken(user._id)
     console.log(accessToken, "usgd", refreshToken, "hdfhfd");
@@ -163,7 +165,9 @@ const getNewtoken = async (req, res) => {
 
         const option = {
             httpOnly: true,
-            secure: true
+            secure: true,
+            sameSite: 'None',
+            maxAge: 60 * 60 * 24 * 7
         }
         return res.status(200)
             .cookie("accessToken", accessToken, option)
@@ -199,7 +203,7 @@ const logout = async (req, res) => {
         )
 
         if (!user) {
-           return  res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "User not logout",
             });
@@ -224,8 +228,8 @@ const logout = async (req, res) => {
 }
 
 const checkAuth = async (req, res) => {
-    console.log("i am in",req);
-    try {      
+    console.log("i am in", req);
+    try {
 
         if (!req.cookies.accessToken) {
             return res.status(401).json({
@@ -234,9 +238,9 @@ const checkAuth = async (req, res) => {
             })
         }
 
-        const cookieTokens = await jwt.verify(req.cookies.accessToken, process.env.ACCESSTOKEN_SECRET_KEY )
+        const cookieTokens = await jwt.verify(req.cookies.accessToken, process.env.ACCESSTOKEN_SECRET_KEY)
         console.log(cookieTokens, "accsesstoken");
- 
+
         if (!cookieTokens) {
             return res.status(401).json({
                 success: false,
@@ -251,7 +255,7 @@ const checkAuth = async (req, res) => {
         })
 
     } catch (error) {
-       return res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "internal server error" + error.message
         })

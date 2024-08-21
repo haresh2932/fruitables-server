@@ -42,7 +42,9 @@ router.get('/google/callback',
 
             const option = {
                 httpOnly: true,
-                secure: true
+                secure: true,
+                sameSite: 'None',
+                maxAge: 60 * 60 * 24 * 7
             }
             return res.status(200)
                 .cookie("accessToken", accessToken, option)
