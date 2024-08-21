@@ -11,11 +11,13 @@ const getAccessToken = async (id) => {
             id: user._id,
             role: user.role,
             expiresIn: '1h'
+          
         }, process.env.ACCESSTOKEN_SECRET_KEY, { expiresIn: process.env.ACCESSTOKEN_EXPIRY })
 
         const refreshToken = await jwt.sign({
             id: user._id,
             expiresIn: '2d'
+            
         }, process.env.REFRESHTOKEN_SECRET_KEY, { expiresIn: process.env.REFRESHTOKEN_EXPIRY })
 
         console.log("reffresh", refreshToken, "access", accessToken);
@@ -105,7 +107,8 @@ const login = async (req, res) => {
 
     const option = {
         httpOnly: true,
-        secure: true
+        secure: true,
+        sameSite:'None'
     }
     const { accessToken, refreshToken } = await getAccessToken(user._id)
     console.log(accessToken, "usgd", refreshToken, "hdfhfd");
@@ -163,7 +166,8 @@ const getNewtoken = async (req, res) => {
 
         const option = {
             httpOnly: true,
-            secure: true
+            secure: true,
+            sameSite:'None'
         }
         return res.status(200)
             .cookie("accessToken", accessToken, option)
