@@ -172,11 +172,6 @@ const getNewtoken = async (req, res) => {
         return res.status(200)
             .cookie("accessToken", accessToken, option)
             .cookie("refreshToken", refreshToken, option)
-            .json({
-                success: true,
-                message: "Token generate Successfully",
-                data: { accessToken: accessToken }
-            })
 
     } catch (error) {
         return res.status(500).json({
