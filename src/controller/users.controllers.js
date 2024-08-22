@@ -11,13 +11,11 @@ const getAccessToken = async (id) => {
             id: user._id,
             role: user.role,
             expiresIn: '1h'
-          
         }, process.env.ACCESSTOKEN_SECRET_KEY, { expiresIn: process.env.ACCESSTOKEN_EXPIRY })
 
         const refreshToken = await jwt.sign({
             id: user._id,
             expiresIn: '2d'
-            
         }, process.env.REFRESHTOKEN_SECRET_KEY, { expiresIn: process.env.REFRESHTOKEN_EXPIRY })
 
         console.log("reffresh", refreshToken, "access", accessToken);
@@ -108,7 +106,8 @@ const login = async (req, res) => {
     const option = {
         httpOnly: true,
         secure: true,
-        sameSite:'None'
+        sameSite: 'None',
+        maxAge: 60 * 60 * 24 * 7
     }
     const { accessToken, refreshToken } = await getAccessToken(user._id)
     console.log(accessToken, "usgd", refreshToken, "hdfhfd");
@@ -167,7 +166,8 @@ const getNewtoken = async (req, res) => {
         const option = {
             httpOnly: true,
             secure: true,
-            sameSite:'None'
+            sameSite: 'None',
+            maxAge: 60 * 60 * 24 * 7
         }
         return res.status(200)
             .cookie("accessToken", accessToken, option)
@@ -191,7 +191,7 @@ const getNewtoken = async (req, res) => {
 const logout = async (req, res) => {
     try {
         const user = await Users.findByIdAndUpdate(
-            req.body._id,
+            req.body.id,
             {
                 $unset: {
                     refreshToken: 1
@@ -203,7 +203,7 @@ const logout = async (req, res) => {
         )
 
         if (!user) {
-           return  res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "User not logout",
             });
@@ -214,6 +214,10 @@ const logout = async (req, res) => {
         return res.status(200)
             .clearCookie("accessToken")
             .clearCookie("refreshToken")
+            .json({
+                success: true,
+                message: "User logged out.",
+            })
     } catch (error) {
         return res.status(500).json({
             success: false,
@@ -224,8 +228,8 @@ const logout = async (req, res) => {
 }
 
 const checkAuth = async (req, res) => {
-    console.log("i am in",req);
-    try {      
+    console.log("i am in", req);
+    try {
 
         if (!req.cookies.accessToken) {
             return res.status(401).json({
@@ -234,9 +238,9 @@ const checkAuth = async (req, res) => {
             })
         }
 
-        const cookieTokens = await jwt.verify(req.cookies.accessToken, process.env.ACCESSTOKEN_SECRET_KEY )
+        const cookieTokens = await jwt.verify(req.cookies.accessToken, process.env.ACCESSTOKEN_SECRET_KEY)
         console.log(cookieTokens, "accsesstoken");
- 
+
         if (!cookieTokens) {
             return res.status(401).json({
                 success: false,
@@ -251,7 +255,7 @@ const checkAuth = async (req, res) => {
         })
 
     } catch (error) {
-       return res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "internal server error" + error.message
         })
