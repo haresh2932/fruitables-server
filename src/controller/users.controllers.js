@@ -214,10 +214,6 @@ const logout = async (req, res) => {
         return res.status(200)
             .clearCookie("accessToken")
             .clearCookie("refreshToken")
-            .json({
-                success: true,
-                message: "User logged out.",
-            })
     } catch (error) {
         return res.status(500).json({
             success: false,
