@@ -245,6 +245,10 @@ const logout = async (req, res) => {
         return res.status(200)
             .clearCookie("accessToken",accessOption)
             .clearCookie("refreshToken",refreshOption)
+            .json({
+                success: true,
+                message: "Logout Successfully."
+            })
     } catch (error) {
         console.log("logout error: ", error);
         
