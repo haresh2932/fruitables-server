@@ -228,15 +228,13 @@ const logout = async (req, res) => {
         const accessOption = {
             httpOnly: true,
             secure: true,
-            sameSite: 'None',
-            maxAge: 60 * 60 *1000
+            sameSite: 'None'
         }
     
         const refreshOption = {
             httpOnly: true,
             secure: true,
-            sameSite: 'None',
-            maxAge: 60 * 60 * 24 * 10*1000
+            sameSite: 'None'
         }
 
         return res.status(200)
