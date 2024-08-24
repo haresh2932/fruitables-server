@@ -205,6 +205,8 @@ const getNewtoken = async (req, res) => {
 
 const logout = async (req, res) => {
     try {
+        console.log("idddddddddddddddd", req.body.id);
+        
         const user = await Users.findByIdAndUpdate(
             req.body.id,
             {
@@ -215,7 +217,10 @@ const logout = async (req, res) => {
             {
                 new: true
             }
-        )
+        );
+
+        console.log("ussss", user);
+        
 
         if (!user) {
             return res.status(400).json({
@@ -241,6 +246,8 @@ const logout = async (req, res) => {
             .clearCookie("accessToken",accessOption)
             .clearCookie("refreshToken",refreshOption)
     } catch (error) {
+        console.log("logout error: ", error);
+        
         return res.status(500).json({
             success: false,
             message: "Internal server error" + error.message,
