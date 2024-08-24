@@ -103,11 +103,18 @@ const login = async (req, res) => {
         });
     }
 
-    const option = {
+    const accessOption = {
         httpOnly: true,
         secure: true,
         sameSite: 'None',
-        maxAge: 60 * 60 * 24 * 7
+        maxAge: 60 * 60 *1000
+    }
+
+    const refreshOption = {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None',
+        maxAge: 60 * 60 * 24 * 10*1000
     }
     const { accessToken, refreshToken } = await getAccessToken(user._id)
     console.log(accessToken, "usgd", refreshToken, "hdfhfd");
@@ -116,8 +123,8 @@ const login = async (req, res) => {
     console.log("Login success:", userData, accessToken);
 
     return res.status(200)
-        .cookie("accessToken", accessToken, option)
-        .cookie("refreshToken", refreshToken, option)
+        .cookie("accessToken", accessToken, accessOption)
+        .cookie("refreshToken", refreshToken, refreshOption)
         .json({
             success: true,
             message: "User Login Successfully",
@@ -163,15 +170,22 @@ const getNewtoken = async (req, res) => {
 
         console.log("generate", accessToken, refreshToken);
 
-        const option = {
+        const accessOption = {
             httpOnly: true,
             secure: true,
             sameSite: 'None',
-            maxAge: 60 * 60 * 24 * 7
+            maxAge: 60 * 60 *1000
+        }
+    
+        const refreshOption = {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            maxAge: 60 * 60 * 24 * 10*1000
         }
         return res.status(200)
-            .cookie("accessToken", accessToken, option)
-            .cookie("refreshToken", refreshToken, option)
+            .cookie("accessToken", accessToken, accessOption)
+            .cookie("refreshToken", refreshToken, refreshOption)
             .json({
                 success: true,
                 message: "Token generate Successfully",
@@ -211,10 +225,23 @@ const logout = async (req, res) => {
         }
 
         console.log(user);
+        const accessOption = {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            maxAge: 60 * 60 *1000
+        }
+    
+        const refreshOption = {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            maxAge: 60 * 60 * 24 * 10*1000
+        }
 
         return res.status(200)
-            .clearCookie("accessToken")
-            .clearCookie("refreshToken")
+            .clearCookie("accessToken",accessOption)
+            .clearCookie("refreshToken",refreshOption)
     } catch (error) {
         return res.status(500).json({
             success: false,
