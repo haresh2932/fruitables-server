@@ -41,7 +41,7 @@ connectDB()
 // connectChat()
 
 app.use(cors({
-    origin: 'https://fruitable-git-master-hareshs-projects-459389e1.vercel.app',
+    origin: 'https://fruitable-steel.vercel.app',
     credentials: true
 }))
 app.use(require('express-session')({ secret: 'fbfhdfhdfdhfh', resave: true, saveUninitialized: true }));
