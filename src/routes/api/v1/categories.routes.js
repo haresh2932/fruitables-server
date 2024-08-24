@@ -18,7 +18,7 @@ router.get(
 router.get(
     "/list-categories",
     validate(categoriesValidation.getCategory),
-    verifyOtp,
+    // verifyOtp,
     categoriesController.getCategory
 )
 
