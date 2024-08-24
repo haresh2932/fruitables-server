@@ -41,7 +41,7 @@ connectDB()
 // connectChat()
 
 app.use(cors({
-    origin: 'https://fruitable-steel.vercel.app',
+    origin: 'https://fruitables-client-pi.vercel.app/',
     credentials: true
 }))
 app.use(require('express-session')({ secret: 'fbfhdfhdfdhfh', resave: true, saveUninitialized: true }));
