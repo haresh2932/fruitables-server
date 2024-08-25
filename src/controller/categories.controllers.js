@@ -10,14 +10,14 @@ const listCategories = async (req, res) => {
         const pageSize =parseInt(req.query.pageSize)
 
         if (page <= 0 && pageSize <= 0) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "Page and Pagesize must be greater then 0",
             });
         }
 
         if (!categories || categories.length === 0) {
-            res.status(404).json({
+            return res.status(404).json({
                 success: false,
                 message: "Categories data not found",
             });
@@ -30,14 +30,14 @@ const listCategories = async (req, res) => {
             paginationData=categories.slice(startIndex,endIndex)
         }
         
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "Categories data fetched",
             totalData:categories.length,
             data: paginationData,
         });
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Internal server error" + error.message,
         });
@@ -50,18 +50,18 @@ const getCategory = async (req, res) => {
         console.log(category);
 
         if (!category) {
-            res.status(404).json({
+            return res.status(404).json({
                 success: false,
                 message: "category data not found",
             });
         }
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "category data fetched",
             data: category,
         });
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Internal server error" + error.message,
         });
@@ -73,20 +73,20 @@ const addCategory = async (req, res) => {
         console.log("value", req.body);
         const category = await Categories.create(req.body);
         if (!category) {
-            res.status(400).json({
+          return  res.status(400).json({
                 success: true,
                 message: "failed to added category",
                 data: category,
             });
         }
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message: "Category added successfully",
             data: category,
         });
 
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Internal server error: " + error.message,
         });
@@ -98,19 +98,19 @@ const deleteCategory = async (req, res) => {
         const category = await Categories.findByIdAndDelete(req.params.category_id);
 
         if (!category) {
-            res.status(404).json({
+           return res.status(404).json({
                 success: false,
                 message: "Category not found",
             });
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "Category deleted successfully",
             data: category,
         });
     } catch (error) {
-        res.status(500).json({
+       return  res.status(500).json({
             success: false,
             message: "Internal server error: " + error.message,
         });
@@ -127,13 +127,13 @@ const updateCategory = async (req, res) => {
 
         console.log(updatedCategory);
 
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message: "Category updated successfully",
             data: updatedCategory,
         });
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Internal server error: " + error.message,
         });
@@ -155,14 +155,14 @@ const countCategory = async (req, res) => {
             ]
         )
         console.log(category);
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message: "Category Found successfully",
             data: category,
         });
 
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Internal server error: " + error.message,
         });
@@ -199,14 +199,14 @@ const mostProducts = async (req, res) => {
             ]
         )
         console.log(category);
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message: "Category Found successfully",
             data: category,
         });
 
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Internal server error: " + error.message,
         });
@@ -238,14 +238,14 @@ const TotalProducts = async (req, res) => {
             ]
         )
         console.log(category);
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message: "Category Found successfully",
             data: category,
         });
 
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Internal server error: " + error.message,
         });
@@ -277,14 +277,14 @@ const getSubcategory = async (req, res) => {
             ]
         )
         console.log(subcategory);
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message: "Subcategory Found successfully",
             data: subcategory,
         });
 
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Internal server error: " + error.message,
         });
@@ -303,14 +303,14 @@ const getInactiveCategory = async (req, res) => {
                 }
             ]
         )
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message: "Subcategory Found successfully",
             data: inactivecategory,
         });
 
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Internal server error: " + error.message,
         });
