@@ -39,7 +39,7 @@ const listCategories = async (req, res) => {
             success: true,
             message: "Categories data fetched",
             totalData:categories.length,
-            data: paginationData,
+            data: categories,
         });
     } catch (error) {
         return res.status(500).json({
