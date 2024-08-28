@@ -28,7 +28,7 @@ const listCategories = async (req, res) => {
         let startIndex=[],endIndex=[],paginationData=[]
         if(page > 0 && pageSize > 0){
             startIndex=(page-1)*pageSize
-            endIndex=startIndex+pageSize
+            endIndex=page * pageSize
             paginationData=categories.slice(startIndex,endIndex)
         }
         
