@@ -5,8 +5,7 @@ const Categories = require("../model/categories.model");
 const listCategories = async (req, res) => {
     //    sendOtp
     try {
-        const categories = await Categories.find();
-       
+        const categories = await Categories.find();      
         
         const page =parseInt(req.query.page)
         const pageSize =parseInt(req.query.pageSize)
@@ -25,15 +24,12 @@ const listCategories = async (req, res) => {
                 success: false,
                 message: "Categories data not found",
             });
-        }
-
-
-        
+        }        
         
         let startIndex=[],endIndex=[],paginationData=[]
         if(page > 0 && pageSize > 0){
             startIndex=(page-1)*pageSize
-            endIndex=page*pageSize
+            endIndex=startIndex + pageSize
             paginationData=categories.slice(startIndex,endIndex)  
         }
         
