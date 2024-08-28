@@ -6,7 +6,7 @@ const listCategories = async (req, res) => {
     //    sendOtp
     try {
         const categories = await Categories.find();
-        console.log(categories);
+        // console.log(categories);
         
         const page =parseInt(req.query.page)
         const pageSize =parseInt(req.query.pageSize)
@@ -31,6 +31,9 @@ const listCategories = async (req, res) => {
             endIndex=page * pageSize
             paginationData=categories.slice(startIndex,endIndex)
         }
+
+       console.log( paginationData," paginationData");
+       
         
         return res.status(200).json({
             success: true,
