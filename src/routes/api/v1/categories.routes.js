@@ -11,7 +11,7 @@ const router = express.Router()
 router.get(
     "/list-categories",
     // sendOtp ,   
-    auth(["admin","employee"]),
+    // auth(["admin","employee"]),
     categoriesController.listCategories
 )
 
