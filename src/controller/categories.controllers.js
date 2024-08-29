@@ -25,7 +25,7 @@ const listCategories = async (req, res) => {
             });
         }
 
-        let startIndex=[],endIndex=[],paginationData=[]
+        let startIndex=[],endIndex=[],paginationData=[...categories]
         if(page > 0 && pageSize > 0){
             startIndex=(page-1)*pageSize
             endIndex=page * pageSize
@@ -39,7 +39,7 @@ const listCategories = async (req, res) => {
             success: true,
             message: "Categories data fetched",
             totalData:categories.length,
-            data: categories,
+            data: paginationData,
         });
     } catch (error) {
         return res.status(500).json({
